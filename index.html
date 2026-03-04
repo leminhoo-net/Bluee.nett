@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nghĩa Bluee | Gaming Services</title>
+    <style>
+        :root {
+            --primary-color: #00d4ff; /* Màu xanh Bluee đặc trưng */
+            --bg-dark: #050505;
+            --card-bg: rgba(20, 20, 25, 0.9);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Ẩn thanh cuộn để hiệu ứng phủ kín */
+            background-color: var(--bg-dark);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Canvas cho hiệu ứng Matrix */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Nội dung chính */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            backdrop-filter: blur(10px); /* Hiệu ứng kính mờ */
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin: 0 0 10px 0;
+            background: linear-gradient(180deg, #fff, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 900;
+        }
+
+        .tagline {
+            color: #aaa;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .services {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .service-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+
+        .service-item:hover {
+            border-color: var(--primary-color);
+            background: rgba(0, 212, 255, 0.08);
+            transform: scale(1.02);
+        }
+
+        .service-item strong {
+            display: block;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .service-item span {
+            color: #ddd;
+            font-size: 0.85rem;
+        }
+
+        .btn-ib {
+            margin-top: 35px;
+            display: inline-block;
+            background: var(--primary-color);
+            color: #000;
+            padding: 15px 50px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-ib:hover {
+            background: #fff;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix-canvas"></canvas>
+
+<div class="content-wrapper">
+    <div class="container">
+        <h1>NGHĨA BLUEE</h1>
+        <p class="tagline">PREMIUM GAMING SERVICES</p>
+
+        <div class="services">
+            <div class="service-item">
+                <strong>HACK - AIM</strong>
+                <span>Hỗ trợ kỹ năng, tối ưu hóa độ nhạy và tâm ngắm.</span>
+            </div>
+            <div class="service-item">
+                <strong>MOD GAME</strong>
+                <span>Mod skin, âm thanh và giao diện theo yêu cầu.</span>
+            </div>
+            <div class="service-item">
+                <strong>SUPPORT 24/7</strong>
+                <span>Cài đặt nhanh chóng - Bảo mật thông tin.</span>
+            </div>
+        </div>
+
+        <a href="https://m.me/https://www.facebook.com/Nghiablue.net?mibextid=LQQJ4d" class="btn-ib">Inbox Ngay</a>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Chữ cái để rơi (dùng mã hex hoặc ký tự tùy ý)
+    const letters = "NGHIABLUEE010101MODAIMHACK";
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = [];
+    for (let x = 0; x < columns; x++) {
+        drops[x] = 1;
+    }
+
+    function draw() {
+        // Tạo hiệu ứng mờ dần để tạo đuôi cho chữ
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#00d4ff"; // Màu chữ rơi (Xanh Bluee)
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters.charAt(Math.floor(Math.random() * letters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 33);
+
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+
+</body>
+</html>
